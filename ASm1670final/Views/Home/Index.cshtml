@@ -1,0 +1,85 @@
+﻿@model List<ASm1670final.Models.Book>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://i.pinimg.com/originals/cb/b3/28/cbb328523af007a52079b4b234be81b0.jpg" class="d-block w-100" alt="..." width="1000" height="600">
+    </div>
+    <div class="carousel-item">
+      <img src="https://static.tvtropes.org/pmwiki/pub/images/Poster-Sasuke.jpg" class="d-block w-100" alt="..." width="1000" height="600">
+    </div>
+    <div class="carousel-item">
+      <img src="https://tse2.explicit.bing.net/th?id=OIP.7DXUSM1-BkgZF6f9L0m0ewHaG9&pid=Api&P=0&h=220" class="d-block w-100" alt="..." width="1000" height="600">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<li style="list-style: none;
+    margin-top: 10px;">
+@* @using (Html.BeginForm())
+{
+            <p>
+                <select asp-for="Category" asp-items="Model.B">
+            <option value="">All</option>
+        </select>
+        Name: @Html.TextBox("SearchString") <input type="submit" value="Search Book Name" />
+        
+            </p>
+}           </li>*@
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <label for="category">Filter by Category:</label>
+    <select name="category" id="category">
+        <option value="">All Categories</option>
+        <!-- Add options dynamically based on your categories -->
+        @foreach (var category in ViewBag.Categories)
+        {
+            <option value="@category.Id">@category.CategoryName</option>
+        }
+    </select>
+
+    <label for="searchString">Search Name:</label>
+    <input type="text" name="searchString" id="searchString" value="@ViewBag.SearchString" />
+
+    <input type="submit" value="Filter" />
+}
+
+<h1 style="text-align:center;font-family:Arial">FPT Shop Product List</h1>
+<div class="container">
+    <div class="row">
+        @foreach (var item in ViewBag.Book)
+        {
+            <div class="col-md-3">
+                <div class="card mt-2">
+                    <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+                         data-mdb-ripple-color="light">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                            <img class="card-img-top" src="@item.UrlImage" width="200" height="400" /> 
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id" class="text-reset">
+                            <h5 class="card-title mb-3">@item.BookName</h5>
+                        </a>
+                        <h6 class="mb-3">Price: $@item.Price</h6>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

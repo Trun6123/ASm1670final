@@ -1,0 +1,102 @@
+﻿@model ASm1670final.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 style="text-align:center;font-family:Arial">Product Detail</h1>
+
+<html lang="en">
+
+<head>
+  
+  <style>
+      body {
+  background-color: white;
+}
+
+.wrapper {
+  height: 600px;
+  width: 800px;
+  margin: 50px auto;
+  border-radius: 7px 7px 7px 7px;
+
+
+.product-img {
+  float: left;
+  height: 500px;
+  width: 400px;
+}
+
+.product-img img {
+  border-radius: 7px;
+}
+
+.product-info {
+  float: left;
+  height: 420px;
+  width: 327px;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #ffffff;
+}
+
+.product-text {
+  height: 300px;
+  width: 327px;
+}
+
+.product-text h1 {
+  margin: 0 0 0 38px;
+  padding-top: 52px;
+  font-size: 34px;
+  color: #474747;
+  text-align: center;
+}
+
+.product-text h1{
+  font-family:Arial;
+}
+
+.product-text h2 {
+  margin: 0 0 47px 38px;
+  font-size: 9px;
+  font-family: Arial;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 0.2em;
+  text-align: justify;
+}
+
+.product-text p {
+  margin: 0 0 0 38px;
+  font-family: Arial    ;
+  color: black;
+  line-height: 1.7em;
+  font-size: 15px;
+  font-weight: lighter;
+  overflow: hidden;
+  text-align: center;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="product-img">
+      <img src="@Html.DisplayFor(model => model.UrlImage)" width="300" height="400"  />
+    </div>
+    <div class="product-info">
+      <div class="product-text">
+        <h1>@Html.DisplayFor(model => model.BookName)</h1>
+        <h2>@Html.DisplayFor(model => model.Description)</h2>
+        <p>Price:@Html.DisplayFor(model => model.Price) $</p>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
+
