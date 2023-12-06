@@ -1,6 +1,28 @@
 ﻿@model List<ASm1670final.Models.Book>
+@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Home Page";
+}
+@{
+    var data = Context.Session.GetString("cart");
+
+    int coutCart = 0;
+    if (data == null)
+    {
+        coutCart = 0;
+    }
+    else
+    {
+        var data2 = Context.Session.GetString("cart");
+        List<Cart> dataCart = JsonConvert.DeserializeObject<List<Cart>>(data2);
+        foreach (var item in dataCart)
+        {
+            coutCart += item.Quantity;
+        }
+
+    }
+
 }
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
@@ -30,16 +52,7 @@
 </div>
 <li style="list-style: none;
     margin-top: 10px;">
-@* @using (Html.BeginForm())
-{
-            <p>
-                <select asp-for="Category" asp-items="Model.B">
-            <option value="">All</option>
-        </select>
-        Name: @Html.TextBox("SearchString") <input type="submit" value="Search Book Name" />
-        
-            </p>
-}           </li>*@
+
 @using (Html.BeginForm("Index", "Home", FormMethod.Post))
 {
     <label for="category">Filter by Category:</label>
@@ -54,9 +67,16 @@
 
     <label for="searchString">Search Name:</label>
     <input type="text" name="searchString" id="searchString" value="@ViewBag.SearchString" />
-
     <input type="submit" value="Filter" />
 }
+<a asp-area=""
+   asp-controller="Home"
+   asp-action="ListCart"
+   class="nav-link text-dark cart">
+    Cart
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span>@coutCart</span>
+</a>
 
 <h1 style="text-align:center;font-family:Arial">FPT Shop Product List</h1>
 <div class="container">
@@ -76,6 +96,7 @@
                             <h5 class="card-title mb-3">@item.BookName</h5>
                         </a>
                         <h6 class="mb-3">Price: $@item.Price</h6>
+                        <a class="btn btn-danger" asp-controller="Home" asp-action="addCart" asp-route-id="@item.Id" style="text-decoration: none;">Add to Cart</a>
                     </div>
                 </div>
             </div>
