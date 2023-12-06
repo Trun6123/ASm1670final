@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ASm1670final.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace ASm1670final.Controllers
 {
@@ -192,6 +193,27 @@ namespace ASm1670final.Controllers
                 return JsonConvert.DeserializeObject<List<Cart>>(jsoncart);
             }
             return new List<Cart>();
+        }
+        public async Task<IActionResult> CheckOut()
+        {
+            var cart = GetCartItems();
+            // tạo cấu trúc db lưu lại đơn hàng và xóa cart khỏi session
+            for (int i = 0; i < cart.Count; i++)
+            {
+                Order order = new Order
+                {
+                    Name = User.FindFirstValue(ClaimTypes.Email),
+                    Quantity = cart[i].Quantity,
+                    Price = cart[i].Book.Price,
+                    OrderDate = DateTime.Now,
+                    Total = cart[i].Book.Price * cart[i].Quantity,
+                    Book_Name = cart[i].Book.BookName
+                };
+                _db.Order.Add(order);
+                await _db.SaveChangesAsync();
+            }
+            HttpContext.Session.Remove("cart");
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

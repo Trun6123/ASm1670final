@@ -12,5 +12,6 @@ namespace ASm1670final.Data
         }
         public DbSet<ASm1670final.Models.Book>? Book { get; set; }
         public DbSet<ASm1670final.Models.Category>? Category { get; set; }
+        public DbSet<ASm1670final.Models.Order>? Order { get; set; }
     }
 }
