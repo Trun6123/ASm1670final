@@ -24,8 +24,6 @@ namespace ASm1670final.Controllers
         // GET: Books
         public async Task<IActionResult> Index(string searchString)
         {
-            //var applicationDbContext = _context.Book.Include(b => b.Category);
-            //return View(await applicationDbContext.ToListAsync());
                       if (_context.Book == null)
             {
                 return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
