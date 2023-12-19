@@ -5,6 +5,7 @@ using ASm1670final.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASm1670final.Controllers
 {
@@ -194,6 +195,7 @@ namespace ASm1670final.Controllers
             }
             return new List<Cart>();
         }
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> CheckOut()
         {
             var cart = GetCartItems();
