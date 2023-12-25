@@ -159,6 +159,10 @@ namespace ASm1670final.Controllers
                     }
                     HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(dataCart));
                 }
+                else
+                {
+                    deleteCart(id);
+                }
                 var cart2 = HttpContext.Session.GetString("cart");
                 return Ok(quantity);
             }
@@ -195,7 +199,7 @@ namespace ASm1670final.Controllers
             }
             return new List<Cart>();
         }
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> CheckOut()
         {
             var cart = GetCartItems();
